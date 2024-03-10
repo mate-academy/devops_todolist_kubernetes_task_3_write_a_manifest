@@ -8,7 +8,6 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
-from rest_framework.views import APIView
 
 start_time = time.time()
 # Define the startup period (in seconds)
@@ -64,16 +63,12 @@ class TodoViewSet(viewsets.ModelViewSet):
         serializer.save(creator=creator)
 
 
-class ReadinessCheck(viewsets.ModelViewSet):
-    def get_status(self, request):
-        if time.time() < start_time + startup_period:
-            return HttpResponse("Not Ready", status=503)
-        else:
-            return HttpResponse("Ready", status=200)
+def get_readiness_status(request):
+    if time.time() < start_time + startup_period:
+        return HttpResponse("Not Ready", status=503)
+    else:
+        return HttpResponse("Ready", status=200)
 
 
-# class LivenessCheck(viewsets.ModelViewSet):
-#     def get_status(self, request):
-#         return HttpResponse("Healthy", status=200)
-def get_status(self, request):
+def get_healthy_status(request):
     return HttpResponse("Healthy", status=200)

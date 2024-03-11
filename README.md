@@ -53,3 +53,37 @@ metadata:
 1. `README.md` file should contain instructions on how to test application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+###How to run
+link to image
+"https://hub.docker.com/layers/dsvyrydoff/todoapp/3.0.0/images/sha256-bee8b4ffea7ae2021a4ad21ecbdea0f73d2d84eec3d28e24365b10965fd1307b?context=repo"
+
+Build image
+"docker build . -t todoapp:3.0.0"
+
+Run container
+"docker run -p 8080:8080 todoapp:3.0.0"
+
+To create namespace for pods run
+"kubectl apply -f todoapp-pod.yml"
+
+To create pod for todoapp run
+"kubectl apply -f todoapp-pod.yml"
+
+To create pod for busybox run
+"kubectl get pods -n todoappspace"
+
+Check pods
+"kubectl get pods -n todoappspace"
+
+To use port-forward run
+"kubectl port-forward pod/todoapp 8081:8080 -n todoappspace"
+
+To test using busybox run
+"kubectl get pods -o wide -n todoappspace"
+you will get app pod's IP
+
+than run
+"kubectl -n todoappspace exec -it busybox -- sh"
+and than
+"curl <pod's IP>"

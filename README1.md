@@ -84,6 +84,6 @@ kubectl -n todoapp exec -it busybox -- sh
 
 Finally, use this command:
 ```
-curl {ip_address_of_busybox_pod}
+curl 0.0.0.0:8081
 ```
 Well done!

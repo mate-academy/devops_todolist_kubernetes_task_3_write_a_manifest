@@ -68,7 +68,7 @@ kubectl port-forward pod/todoapp 8081:8080 -n todoapp
 ```
 Content will appear at: 
 ```
-localhost:8080
+localhost:8081
 ```
 
 ## How to test application using 'busybox' container

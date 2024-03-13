@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: todoapp
-  namespace: todoappspace
+  namespace: todoapp
   labels:
     app: todo
 spec:

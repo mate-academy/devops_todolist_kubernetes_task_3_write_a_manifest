@@ -11,8 +11,18 @@ import time
 
 
 start_time = time.time()
+startup_period = 40
 
-startup_period = 30
+
+def health_check(request):
+    return HttpResponse("Healthy", status=200)
+
+def readiness_check(request):
+    if time.time() < start_time + startup_period:
+        return HttpResponse("Not Ready", status=503)
+    else:
+        return HttpResponse("Ready", status=200)
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -64,11 +74,13 @@ class TodoViewSet(viewsets.ModelViewSet):
         serializer.save(creator=creator)
 
 
-def liveness(request):
-     return HttpResponse("Healthy", status=200)
-
-def readiness(request):
+def get_readiness_status(request):
     if time.time() < start_time + startup_period:
         return HttpResponse("Not Ready", status=503)
     else:
         return HttpResponse("Ready", status=200)
+
+
+def get_healthy_status(request):
+    return HttpResponse("Healthy", status=200)
+    

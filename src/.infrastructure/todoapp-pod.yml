@@ -3,6 +3,8 @@ kind: Pod
 metadata:
   name: todoapp
   namespace: todoapp
+  labels:
+    app: todoapp
 spec:
   containers:
   - name: todoapp
@@ -11,13 +13,13 @@ spec:
     - containerPort: 8080
     readinessProbe:
       httpGet:
-        path: /readiness
+        path: /api/ready
         port: 8080
       initialDelaySeconds: 5
-      periodSeconds: 10
+      periodSeconds: 5
     livenessProbe:
       httpGet:
-        path: /liveness/
+        path: /api/health
         port: 8080
-      initialDelaySeconds: 15
-      periodSeconds: 20
+      initialDelaySeconds: 60
+      periodSeconds: 5

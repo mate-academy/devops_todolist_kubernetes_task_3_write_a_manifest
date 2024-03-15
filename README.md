@@ -50,6 +50,44 @@ metadata:
 1. ToDo app pod `manifest` should have a liveness probe configured
 1. `README.md` file should contain instructions on how to apply all manifests
 1. `README.md` file should contain instructions on how to test ToDo application using the `port-forward` command
-1. `README.md` file should contain instructions on how to test application using the
+1. `    .md` file should contain instructions on how to test application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+
+# ToDo Application Deployment Instructions
+
+## Applying Kubernetes Manifests
+
+1. Apply the namespace.yml to create the todoapp namespace:
+
+`kubectl apply -f .infrastructure/namespace.yml`
+
+2. Apply the todoapp-pod.yml to create the ToDo application pod:
+
+`kubectl apply -f .infrastructure/todoapp-pod.yml -n todoapp`
+
+3. Apply the busybox.yml to create a pod with busyboxplus:curl:
+
+`kubectl apply -f .infrastructure/busybox.yml -n todoapp`
+
+# Testing Instructions
+## Testing ToDo Application Using Port Forwarding
+
+Use kubectl port-forward to access the ToDo application:
+
+`kubectl port-forward pod/todoapp 8080:8080 -n todoapp`
+
+## Testing Application Using busyboxplus:curl Container
+
+Check IP address:
+
+`kubectl get pods -n todoapp -o wide`
+
+Access the BusyBox container:
+
+`kubectl exec -it busybox-curl -n todoapp -- sh`
+
+Inside the BusyBox container, use curl to test the ToDo application:
+
+`curl http:10.1.0.36//:8080/api/health`

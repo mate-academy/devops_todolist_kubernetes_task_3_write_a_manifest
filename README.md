@@ -11,7 +11,7 @@
 1. Make sure you have kubectl configured to your Kubernetes cluster.
 2. Apply the Kubernetes manifests by running the following command in the terminal:
     ```bash
-    kubectl apply -f .infrastructure/
+    kubectl apply -f infrastructure/
 
 ## Testing
 

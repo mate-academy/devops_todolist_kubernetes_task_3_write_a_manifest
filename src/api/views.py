@@ -83,4 +83,3 @@ def get_readiness_status(request):
 
 def get_healthy_status(request):
     return HttpResponse("Healthy", status=200)
-    

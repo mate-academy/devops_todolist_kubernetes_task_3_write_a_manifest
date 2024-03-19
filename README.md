@@ -90,4 +90,4 @@ Access the BusyBox container:
 
 Inside the BusyBox container, use curl to test the ToDo application:
 
-`curl http:<pod_ip>//:8080/api/health`
+`curl http://<pod_ip>:8080/api/health`

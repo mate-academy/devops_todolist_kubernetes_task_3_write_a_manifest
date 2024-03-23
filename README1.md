@@ -84,6 +84,6 @@ kubectl -n todoapp exec -it busybox -- sh
 
 Finally, use this command:
 ```
-curl localhost:8081
+curl 10.1.0.13:8081
 ```
 Well done!

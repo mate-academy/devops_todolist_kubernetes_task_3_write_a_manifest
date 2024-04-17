@@ -53,3 +53,18 @@ metadata:
 1. `README.md` file should contain instructions on how to test application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+
+## Створення namespace
+kubectl apply -f .infrastructure/namespace.yml
+## Розгортання додатку
+kubectl apply -f .infrastructure/todoapp-pod.yml
+## Розгортання BusyBox
+kubectl apply -f .infrastructure/busybox.yml
+## Тестування застосунку
+kubectl port-forward pod/todoapp-pod 8080:8000
+Після цього, застосунок буде доступний за адресою `http://localhost:8080`
+Заходимо в контейнер:
+kubectl exec -it busybox -- sh
+Відправлення запиту за допомогою curl у контейнері:
+curl http://todoapp-pod:8000

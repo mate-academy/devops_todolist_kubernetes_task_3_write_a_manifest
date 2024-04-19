@@ -53,3 +53,29 @@ metadata:
 1. `README.md` file should contain instructions on how to test application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+
+In order to start application in the kubernetes you should execute the next steps:
+1. Start Docker desktop application on your PC
+2. Open a terminal and go to the directory '.infrastructure'
+3. Create namespace
+kubectl apply -f namespace.yml
+4. Create pod with busybox
+kubectl apply -f busybox.yml
+5. Create pod with application
+kubectl apply -f todoapp-pod.yml
+6. Check pods
+kubectl get pods -n todoapp
+7. In order to check the application in your browser you should execute the next command
+kubectl port-forward pod/todoapp 8080:8080 -n todoapp
+Now, the application is available for viewing in your browser by url
+http://localhost:8080/
+8. In order to check the application using the busybox you should execute the next command
+To get pod`s ip adress
+kubectl get pods -n todoapp -o wide
+To connect to pod (enter inside)
+kubectl -n todoapp exec -it busybox -- sh
+Then execute the next command
+curl 'ip_adress_pod':8080
+In terminal you have to see html-code the application`s start page
+

@@ -6,8 +6,11 @@ WORKDIR /app
 # Copy the application code into the container
 COPY . .
 
-# Install dependencies and run migrations
-RUN pip install -r requirements.txt && python manage.py migrate
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Run migrations
+RUN python manage.py migrate
 
 # Expose port 8080 to the host
 EXPOSE 8080

@@ -4,9 +4,21 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
-from django.utils import timezone
+from django.http import JsonResponse, HttpResponse
+from django.utils.timezone import now
+
 import time
+
+start_time = now()
+
+def health(request):
+    return HttpResponse(status=200)
+
+def ready(request):
+    if (now() - start_time).total_seconds() > 30:
+        return HttpResponse(status=200)
+    else:
+        return HttpResponse(status=503)
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -44,6 +56,7 @@ class TodoListViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         creator = user if user.is_authenticated else None
+
         serializer.save(creator=creator)
 
 class TodoViewSet(viewsets.ModelViewSet):
@@ -54,5 +67,6 @@ class TodoViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        creator = user if user.is_authenticated else None
+        creator = creator = user if user.is_authenticated else None
+
         serializer.save(creator=creator)

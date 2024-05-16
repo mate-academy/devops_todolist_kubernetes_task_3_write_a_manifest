@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: todoapp
+spec:
+  containers:
+  - name: busybox
+    image: busybox:latest  # Використовуємо загальнодоступний образ busybox
+    args:
+    - sleep
+    - "1000"
+    resources:
+      limits:
+        cpu: "0.5"
+        memory: "512Mi"
+  restartPolicy: Always

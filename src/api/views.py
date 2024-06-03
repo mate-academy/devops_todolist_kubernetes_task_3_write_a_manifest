@@ -4,9 +4,24 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
+from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 import time
+
+# Record the server start time
+server_start_time = time.time()
+
+
+def liveness(request):
+    return HttpResponse("Live", status=200)
+
+def readiness(request):
+    current_time = time.time()
+    if current_time - server_start_time >= 40:
+        return HttpResponse("Ready", status=200)
+    else:
+        return HttpResponse("Not Ready", status=503)
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

@@ -8,6 +8,21 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+start_time = time.time()
+startup_period = 40
+
+
+def liveness_endpoint(request):
+    return HttpResponse("Healthy", status=200)
+
+
+def readiness_endpoint(request):
+    current_time = time.time()
+    if current_time < (start_time + startup_period):
+        return HttpResponse("Service is not ready", status=503)
+    
+    return HttpResponse("Ready", status=200)
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.

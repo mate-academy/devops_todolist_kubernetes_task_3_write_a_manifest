@@ -1,31 +1,42 @@
-# Django ToDo list
+Make sure you have docker installed.
 
-This is a todo list web application with basic features of most web apps, i.e., accounts/login, API, and interactive UI. To do this task, you will need:
+Pull docker app image:
 
-- CSS | [Skeleton](http://getskeleton.com/)
-- JS  | [jQuery](https://jquery.com/)
-
-## Explore
-
-Try it out by installing the requirements (the following commands work only with Python 3.8 and higher, due to Django 4):
-
-```
-pip install -r requirements.txt
+```angular2html
+   docker pull sserkov84/todoapp:latest
 ```
 
 Create a database schema:
+Apply manifests:
 
+```angular2html
+kubectl apply -f .infrastructure/namespace.yml
 ```
-python manage.py migrate
+```
+kubectl apply -f .infrastructure/todoapp-pod.yml
+```
+```
+kubectl apply -f .infrastructure/busybox.yml
 ```
 
-And then start the server (default is http://localhost:8000):
-
+Use this command to see logs:
 ```
 python manage.py runserver
+```angular2html
+kubectl logs todoapp -n todoapp
 ```
 
-Now you can browse the [API](http://localhost:8000/api/) or start on the [landing page](http://localhost:8000/).
+Use following command to test api using port-forward:
+```angular2html
+kubectl port-forward pod/todoapp 8081:8080 -n todoapp
+```
+ Use following commant to connect busybox:
+```angular2html
+kubectl -n todoapp exec -it busybox -- sh
+```
+```angular2html
+curl http://todoapp-pod:8080
+```
 
 ## Task
 

@@ -1,12 +1,14 @@
 from django.contrib.auth.models import User
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, viewsets, status
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
-from django.utils import timezone
 import time
+
+from todolist.settings import START_TIME, START_PERIOD
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -46,6 +48,7 @@ class TodoListViewSet(viewsets.ModelViewSet):
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
 
+
 class TodoViewSet(viewsets.ModelViewSet):
 
     queryset = Todo.objects.all()
@@ -56,3 +59,13 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def health_check_view(request):
+    return HttpResponse("Healthy", status=status.HTTP_200_OK)
+
+
+def readiness_check_view(request):
+    if time.time() < START_TIME + START_PERIOD:
+        return HttpResponse("Not Ready", status=status.HTTP_503_SERVICE_UNAVAILABLE)
+    return HttpResponse("Ready", status=status.HTTP_200_OK)

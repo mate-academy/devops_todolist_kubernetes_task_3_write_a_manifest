@@ -53,3 +53,40 @@ metadata:
 1. `README.md` file should contain instructions on how to test application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+
+## How to test
+
+### Pre-requirements
+
+Make sure Docker and Kubernetes are installed on your machine.
+
+### Apply manifests
+
+```bash
+kubectl apply -f .infrastructure/namespace.yml
+kubectl apply -f .infrastructure/busybox.yml
+kubectl apply -f .infrastructure/todoapp-pod.yml
+```
+
+### See the logs
+
+```bash
+kubectl logs -n todoapp todoapp
+```
+
+### Test the application
+
+```bash
+kubectl port-forward pod/todoapp 8081:8080 -n todoapp
+```
+
+### Busybox test
+
+```bash
+kubectl exec -n todoapp -it busybox -- sh
+```
+
+```bash
+curl http://todoapp-pod:8080
+```

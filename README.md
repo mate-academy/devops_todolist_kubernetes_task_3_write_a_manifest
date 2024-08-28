@@ -87,4 +87,21 @@ metadata:
 - Liveness Probe: Visit http://localhost:8000/api/health/liveness/ to check if the application is alive.
 
 ### Using Busybox for Testing
-To test the application using the busybox container, create a new pod with the following manifest:
+To test the application using the `busybox` container, create a new pod with the following manifest:
+
+```bash
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: busybox
+    namespace: todoapp
+  spec:
+    containers:
+    - name: busybox
+      image: ikulyk404/busyboxplus:curl
+      command: ["sh", "-c", "while true; do echo hello; sleep 10;done"]
+```
+**Apply the manifest:**
+```
+kubectl apply -f .infrastructure/busybox.yml
+```

@@ -4,7 +4,7 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 import time
 
@@ -56,3 +56,14 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def readiness(request):
+    try:
+        Todo.objects.exists()
+        return JsonResponse({"status": "ready"}, status=200)
+    except:
+        return JsonResponse({"status": "not ready"}, status=503)
+
+def health_check(request):
+    return JsonResponse({"status": "Healthy"}, status=200)
+   

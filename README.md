@@ -53,3 +53,25 @@ metadata:
 1. `README.md` file should contain instructions on how to test application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+
+1. Apply manifests by commands
+```
+kubectl apply -f .infrastructure 
+```
+
+2. Port-forwarding
+```
+run `kubectl port-forward pod/todoapp-pod 8081:8080 -n todoapp`
+```
+3. Test app via curl
+```
+get todoapp-pod ip `kubectl get pods -n todoapp -o wide`
+open todo app in interactive mode `kubectl -n todoapp exec -it curlpod -- sh`
+make a request `curl [ip from step 1]:8080/api/liveness/`
+make a request `curl [ip from step 1]:8080/api/readiness/` after ~ 40s make another request to get updated status
+```
+4. Clean up resources
+```
+kubectl delete namespace todoapp
+```

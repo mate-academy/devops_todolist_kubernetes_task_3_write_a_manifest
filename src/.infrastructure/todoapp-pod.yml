@@ -8,17 +8,16 @@ spec:
     - name: todoapp
       image: lavryniuk/todoapp:3.0.0
       ports:
-        - containerPort: 8081
+        - containerPort: 8080
       livenessProbe:
         httpGet:
           path: api/health
-          port: 8081
+          port: 8080
         initialDelaySeconds: 10
         periodSeconds: 5
       readinessProbe:
         httpGet:
           path: api/ready
-          port: 8081
+          port: 8080
         initialDelaySeconds: 5
         periodSeconds: 5
-        

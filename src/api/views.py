@@ -8,6 +8,9 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+start_time = time.time()
+start_period = 40
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -56,3 +59,14 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def health_check(request):
+    return HttpResponse("OK", status=200)
+
+def readiness_check(request):
+    global start_time
+    if time.time() - start_time > start_period:
+        return HttpResponse("OK", status=200)
+    else:
+        return HttpResponse("Not Ready", status=503)

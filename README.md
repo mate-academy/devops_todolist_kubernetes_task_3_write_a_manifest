@@ -53,3 +53,31 @@ metadata:
 1. `README.md` file should contain instructions on how to test application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+## How to run the application
+
+1. Initialize the infrastructure:
+    ```shell
+    kubectl apply -f .infrastructure
+    ```
+
+1. Test the application using the `port-forward` command:
+    ```shell
+    kubectl port-forward -n todoapp pod/todoapp 8080:8080
+    ```
+
+1. Test the application using the `busyboxplus:curl` container:
+    1. Get the pod IP address:
+        ```shell
+        kubectl get pods -n todoapp -l app=todoapp -o jsonpath='{.items[0].status.podIP}'
+        ```
+   
+    1. Connect to the pod using the `busyboxplus:curl` container:
+        ```shell
+        kubectl -n todoapp exec -it busybox -- sh
+        ```
+       
+    1. Test the application:
+        ```shell
+        curl http://<todoapp_pod_ip>:8080
+        ```

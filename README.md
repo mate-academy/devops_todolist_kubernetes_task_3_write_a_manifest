@@ -80,4 +80,3 @@ kubectl -n todoapp exec -it busybox -- sh
 ```
 curl [TodoApp_IP]:8080
 ```
-

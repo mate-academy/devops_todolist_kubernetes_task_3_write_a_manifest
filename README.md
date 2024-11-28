@@ -54,3 +54,12 @@ metadata:
 1. `INSTRUCTION.md` file should contain instructions on how to test the application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+1. kubectl apply -f .infractructure/
+2. kubectl port-forward pod/todoapp 8081:8080 -n todoapp
+3. Check if working: http://localhost:8081
+4. kubectl get pods -n todoapp -o wide
+5. kubectl -n todoapp exec -it busybox -- sh
+6. curl "todoapp:IP":8081

@@ -54,3 +54,55 @@ metadata:
 1. `INSTRUCTION.md` file should contain instructions on how to test the application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+
+## Deploying the ToDo Application on Kubernetes
+
+### Prerequisites
+- Run Kubernetes cluster (Minikube).
+- Make sure `kubectl` is installed and configured to interact with your cluster.
+- If you use Ubuntu, make sure minikube service is running 
+
+### Steps to Deploy
+
+1. **Create the Namespace**:
+   Apply the namespace manifest to create a dedicated namespace for the ToDo application.
+
+   ```bash
+   kubectl apply -f .infrastructure/namespace.yaml
+
+2. **Deploy the ToDo Application**: 
+    Apply the pod manifest to deploy the ToDo application in the Kubernetes cluster.
+    
+    ```bash
+    kubectl apply -f .infrastructure/todoapp-pod.yaml
+3. **Port Forward to Access the Application: Forward the pod's port to access the application locally.**
+
+    ```bash
+    kubectl port-forward pod/todoapp-pod 8000:8000 -n todoapp
+
+**You can now access the application by navigating to http://localhost:8000.**
+
+### Testing the Application
+- Readiness Probe: Visit http://localhost:8000/api/health/readiness/ to check if the application is ready.
+- Liveness Probe: Visit http://localhost:8000/api/health/liveness/ to check if the application is alive.
+
+### Using Busybox for Testing
+To test the application using the `busybox` container, create a new pod with the following manifest:
+
+```bash
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: busybox
+    namespace: todoapp
+  spec:
+    containers:
+    - name: busybox
+      image: ikulyk404/busyboxplus:curl
+      command: ["sh", "-c", "while true; do echo hello; sleep 10;done"]
+```
+**Apply the manifest:**
+```
+kubectl apply -f .infrastructure/busybox.yml
+```

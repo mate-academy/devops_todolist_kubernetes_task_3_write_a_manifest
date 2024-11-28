@@ -54,3 +54,34 @@ metadata:
 1. `INSTRUCTION.md` file should contain instructions on how to test the application using the
 `busyboxplus:curl` container
 1. Create PR with your changes and attach it for validation on a platform.
+
+## Apply all manifest
+To applay all manifest use next command:
+```
+kubectl apply -f .infrastructure
+```
+
+## Test todo-app
+To test todo app use next command
+```
+kubectl port-forward pod/todo-app 8081:8080 -n todoapp
+```
+and open link http://localhost:8081/
+
+## Test with busybox
+To test our app with busy box check our pods with comand:
+```
+kubectl get pods -n todoapp -o wide
+```
+copy ip adress of todoapp and open busybox with next command:
+```
+kubectl -n todoapp exec -it busybox -- sh
+```
+next use ip of our todoapp pods with port 8080 such as
+```
+curl 10.1.0.xx:8080
+``` 
+instead of xx put the IP address of pod. To check health of todoapp use next:
+```
+curl 10.1.0.10:8080/api/health/
+```

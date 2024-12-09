@@ -77,3 +77,4 @@
 2. Використовуйте команди `kubectl logs` для перегляду логів Pod, якщо виникають помилки:
    ```bash
    kubectl logs <pod-name> -n todoapp
+

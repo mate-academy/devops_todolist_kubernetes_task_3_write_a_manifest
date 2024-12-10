@@ -2,7 +2,7 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY ./src .
+COPY ./src /app
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt

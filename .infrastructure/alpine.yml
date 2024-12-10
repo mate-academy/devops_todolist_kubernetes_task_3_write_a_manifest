@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine-curl
+  namespace: todoapp
+spec:
+  containers:
+    - name: alpine-curl
+      image: niklafinskiy/alpine-curl:1.0.0
+      command: ["/bin/sh", "-c", "apk update && apk add coreutils && sleep infinity"]

@@ -13,5 +13,5 @@ app_name = "api"
 urlpatterns = [
     path("", include(router.urls)),
     path("liveness/", views.liveness, name="liveness"),
-    path("readiness/", views.rediness, name="readiness"),
+    path("readiness/", views.readiness, name="readiness"),
 ]

@@ -11,7 +11,7 @@ import time
 
 def liveness(request):
     return JsonResponse({"status": "alive"})
-def rediness(request):
+def readiness(request):
     try:
         Todo.objects.exists()
         return JsonResponse({"status": "ready"})

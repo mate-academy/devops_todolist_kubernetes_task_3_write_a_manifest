@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from rest_framework import permissions, viewsets
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
@@ -7,6 +8,15 @@ from lists.models import Todo, TodoList
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+
+def liveness(request):
+    return JsonResponse({"status": "alive"})
+def readiness(request):
+    try:
+        Todo.objects.exists()
+        return JsonResponse({"status": "ready"})
+    except Exception:
+        return JsonResponse({"status": "not ready"}, status=503)
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

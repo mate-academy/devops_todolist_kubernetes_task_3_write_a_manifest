@@ -8,6 +8,9 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+from django.db import connections, OperationalError
+
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -56,3 +59,15 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def readiness_view():
+    try:
+        db_conn = connections["default"]
+        db_conn.ensure_connection()
+        return HttpResponse("Ready", status=200)
+    except OperationalError:
+        return HttpResponse("NotReady", status=503)
+    
+def liveness_view():
+    return HttpResponse("Alive", status=200)
+    

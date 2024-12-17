@@ -1,0 +1,13 @@
+FROM python:3.12
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    python manage.py migrate
+
+EXPOSE 8080
+
+ENTRYPOINT [ "python", "manage.py", "runserver", "0.0.0.0:8080" ]

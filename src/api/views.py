@@ -8,6 +8,21 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+from django.http import JsonResponse
+
+def readiness_check(request):
+    """
+    Readiness endpoint to check if the application is ready to handle requests.
+    """
+    return JsonResponse({"status": "ready"}, status=200)
+
+def liveness_check(request):
+    """
+    Liveness endpoint to check if the application is alive.
+    Always returns HTTP 200 unless the server is down.
+    """
+    return JsonResponse({"status": "alive"}, status=200)
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.

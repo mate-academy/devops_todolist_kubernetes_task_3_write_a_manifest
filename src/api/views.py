@@ -71,4 +71,4 @@ def readiness(request):
     if time.time() > start_time + start_period:
         return JsonResponse({"status": "NotOk"}, status=503)
     else:
-        return JsonResponse({"ready", 503})
+        return JsonResponse({"status": "Ok"}, status=200)

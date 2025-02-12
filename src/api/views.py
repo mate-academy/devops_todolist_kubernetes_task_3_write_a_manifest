@@ -5,8 +5,15 @@ from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.utils import timezone
 import time
+
+def liveness(request):
+    return JsonResponse({"status": "ok"})
+
+def readiness(request):
+    return JsonResponse({"status": "ok"})
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

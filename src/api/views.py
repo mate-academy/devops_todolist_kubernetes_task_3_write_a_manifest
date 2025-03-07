@@ -5,8 +5,11 @@ from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
-from django.utils import timezone
 import time
+
+start_time = time.time()
+# Define the startup period (in seconds)
+startup_period = 40
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -56,3 +59,15 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def health_check(request):
+   return HttpResponse("Healthy", status=200)
+
+def readiness_check(request):
+   # You can add logic here to determine if the app is ready. For simplicity, we'll just return 200.
+   if time.time() < start_time + startup_period:
+       # Application is not ready, return a non-200 status code
+       return HttpResponse("Not Ready", status=503)
+   else:
+       # Application is ready, return 200
+       return HttpResponse("Ready", status=200)

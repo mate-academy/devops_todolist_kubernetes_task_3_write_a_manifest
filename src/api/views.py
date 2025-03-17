@@ -4,9 +4,26 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 import time
+
+
+def readiness_probe(request):
+    """
+    Readiness probe endpoint for Kubernetes.
+    It checks if the application is ready to receive traffic.
+    """
+    return JsonResponse({"status": "ready"}, status=200)
+
+
+def liveness_probe(request):
+    """
+    Liveness probe endpoint for Kubernetes.
+    It checks if the application is running properly.
+    """
+    return JsonResponse({"status": "alive"}, status=200)
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

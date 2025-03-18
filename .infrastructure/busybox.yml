@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: busybox
+    namespace: todoapp
+spec:
+    containers:
+    - name: busybox
+      image: parthyadav/busyboxplus:curl-v22.12.17
+      args:
+      - sleep
+      - "1000"

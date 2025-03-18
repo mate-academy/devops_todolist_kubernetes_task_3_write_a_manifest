@@ -56,3 +56,10 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def aliveView(request):
+    return HttpResponse("Liveness Probe is OK", status=200)
+
+def readyView(request):
+    return HttpResponse("Readiness Probe is OK", status=200)

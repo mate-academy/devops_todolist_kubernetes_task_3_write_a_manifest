@@ -56,3 +56,18 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+# Додаємо readiness probe
+def health(request):
+    return HttpResponse("OK", status=200)
+
+# Додаємо liveness probe
+def live(request):
+    try:
+        # Спробуйте виконати простий запит до бази даних
+        # (можливо, вам знадобиться змінити цей код
+        #  залежно від вашої моделі даних)
+        TodoList.objects.count()
+        return HttpResponse("OK", status=200)
+    except Exception:
+        return HttpResponse("Error", status=500)

@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -46,6 +47,7 @@ class TodoListViewSet(viewsets.ModelViewSet):
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
 
+
 class TodoViewSet(viewsets.ModelViewSet):
 
     queryset = Todo.objects.all()
@@ -56,3 +58,12 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def health_check(request):
+    return HttpResponse("OK", status=200)
+
+
+def ready_check(request):
+    time.sleep(2)
+    return HttpResponse("Ready", status=200)

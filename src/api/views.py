@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
+from rest_framework.views import APIView  # Missing import added
+from rest_framework.response import Response  # Optional but recommended
+from django.http import JsonResponse  # Missing import added
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
@@ -7,6 +10,27 @@ from lists.models import Todo, TodoList
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+
+
+
+_START_TIME = time.time()
+
+class LivenessView(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request):
+        return JsonResponse({'status': 'OK'}, status=200)
+
+
+class ReadinessView(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request):
+        if time.time() < _START_TIME + 60:
+            return JsonResponse(
+                {'status': 'initializing', 'seconds_remaining': int(60 - (time.time() - _START_TIME))}, 
+                status=503
+            )
+        return JsonResponse({'status': 'READY'}, status=200)
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

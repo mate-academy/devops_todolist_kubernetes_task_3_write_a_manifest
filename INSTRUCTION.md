@@ -34,7 +34,7 @@ kubectl port-forward pod/todoapp 8081/8080 -n todoapp
 1. Finding the IP addresses of pods, you need to run the command:
 
 ```bash
-kubeclt get pods -n todoapp -o wide
+kubectl get pods -n todoapp -o wide
 ```
 
 After that, you need to go into the pod itself and execute a curl request

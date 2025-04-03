@@ -56,3 +56,17 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+class ReadyViewSet(viewsets.ViewSet):
+
+    permission_classes = (permissions.AllowAny,)
+
+    def list(self, request):
+        return HttpResponse("ready", status=200, content_type="text/plain")
+
+class LivenessViewSet(viewsets.ViewSet):
+
+    permission_classes = (permissions.AllowAny,)
+
+    def list(self, request):
+        return HttpResponse("alive", status=200, content_type="text/plain")

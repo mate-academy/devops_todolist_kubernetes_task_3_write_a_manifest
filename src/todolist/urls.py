@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django.urls import include, path
-from .views import readiness, liveness
+from django.urls import include, pat
 
 urlpatterns = [
     path("", include("lists.urls")),
@@ -8,6 +7,4 @@ urlpatterns = [
     path("api/", include("api.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("admin/", admin.site.urls),
-    path("readiness/", readiness, name="readiness"),
-    path("liveness/", liveness, name="liveness")
 ]

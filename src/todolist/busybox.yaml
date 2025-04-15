@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: busybox-curl
+  name: busybox
 spec:
   containers:
-    - name: busyboox
+    - name: busybox
       image: ikulyk404/busyboxplus
       ports:
         - name: busybox

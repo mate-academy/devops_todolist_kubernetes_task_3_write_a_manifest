@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todoapp-pod
+spec:
+  containers:
+    - name: todoapp-pod
+      image: ilya4809/todoapp:3.0.0
+      ports:
+        - name: todoapp-pod
+          containerPort: 8080
+      readinessProbe:
+        httpGet:
+          path: /readiness
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      livenessProbe:
+          httpGet:
+            path: /liveness
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20

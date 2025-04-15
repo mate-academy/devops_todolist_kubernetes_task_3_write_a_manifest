@@ -78,3 +78,4 @@ def add_todolist(request):
             return render(request, "lists/overview.html", {"form": form})
 
     return redirect("lists:index")
+

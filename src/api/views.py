@@ -7,6 +7,16 @@ from lists.models import Todo, TodoList
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(["GET"])
+def health_check(request):
+    return Response("Healthy", status=200)
+
+@api_view(["GET"])
+def readiness_check(request):
+    return Response("Ready", status=200)
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

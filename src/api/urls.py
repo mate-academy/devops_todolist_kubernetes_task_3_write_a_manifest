@@ -7,8 +7,9 @@ router = DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"todolists", views.TodoListViewSet)
 router.register(r"todos", views.TodoViewSet)
-
 app_name = "api"
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
+    path("api/health/", views.health_check, name='health'),
+    path("api/ready/", views.readiness_check, name='ready')
 ]

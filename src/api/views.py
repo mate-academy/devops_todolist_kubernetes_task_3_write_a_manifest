@@ -8,6 +8,16 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from . import views
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -56,3 +66,15 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+class ReadinessCheck(APIView):
+    permission_classes = [AllowAny]  # Дозволяє доступ без перевірки прав
+
+    def get(self, request):
+        return Response({"status": "ready"}, status=status.HTTP_200_OK)
+
+class LivenessCheck(APIView):
+    permission_classes = [AllowAny]  # Дозволяє доступ без перевірки прав
+
+    def get(self, request):
+        return Response({"status": "alive"}, status=status.HTTP_200_OK)

@@ -8,7 +8,8 @@ router.register(r"users", views.UserViewSet)
 router.register(r"todolists", views.TodoListViewSet)
 router.register(r"todos", views.TodoViewSet)
 
-app_name = "api"
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
+    path("liveness/", views.LivenessCheck.as_view(), name="liveness"),
+    path("readiness/", views.ReadinessCheck.as_view(), name="readiness"),
 ]

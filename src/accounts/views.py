@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.http import JsonResponse
 
 from accounts.forms import LoginForm, RegistrationForm
 from lists.forms import TodoForm

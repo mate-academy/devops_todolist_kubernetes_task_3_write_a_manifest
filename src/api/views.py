@@ -4,9 +4,16 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 import time
+
+
+def readiness(request):
+    return JsonResponse({"status": "ok"})
+
+def liveness(request):
+    return JsonResponse({"status": "ok"})
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

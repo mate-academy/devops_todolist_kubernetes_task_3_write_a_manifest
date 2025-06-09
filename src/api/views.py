@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
+from rest_framework.response import Response
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
@@ -56,3 +57,14 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+class ReadyViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsCreatorOrReadOnly,)
+    def list(self, request, *args, **kwargs):
+        return Response("Ready!", status=200)
+    
+
+class LivenessViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsCreatorOrReadOnly,)
+    def list(self, request, *args, **kwargs):
+        return Response("Alive!", status=200)

@@ -1,0 +1,4 @@
+- Docker
+- Docker Hub акаунт
+- Kubernetes кластер (Docker Desktop)
+- kubectl

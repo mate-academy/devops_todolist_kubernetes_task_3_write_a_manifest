@@ -12,7 +12,7 @@ kubectl exec -it busybox-curl -- sh
 
 and then try to reach ip of todoapp with command:
 
-curl
+curl http://10.1.0.10:8080/
 
 
 

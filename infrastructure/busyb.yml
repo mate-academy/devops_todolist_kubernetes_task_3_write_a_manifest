@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busyb
+  namespace: todoapp
+spec:
+  containers:
+    - name: busyb
+      image: dspyrydonov/busyb:curl
+      command: ["sleep", "3600"]

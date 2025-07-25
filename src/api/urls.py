@@ -1,4 +1,6 @@
 from django.urls import include, path
+from .views import readiness_view
+from .views import liveness_view
 from rest_framework.routers import DefaultRouter
 
 from api import views
@@ -10,5 +12,7 @@ router.register(r"todos", views.TodoViewSet)
 
 app_name = "api"
 urlpatterns = [
-    path("", include(router.urls))
+    path('', include(router.urls)),
+    path("readiness/", readiness_view),
+    path("liveness/", liveness_view),
 ]

@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.db import connection
 from rest_framework import permissions, viewsets
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
@@ -56,3 +58,14 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def readiness_view(request):
+    try:
+        # Простий запит до БД
+        connection.ensure_connection()
+        return JsonResponse({"status": "ready"})
+    except Exception:
+        return JsonResponse({"status": "not ready"}, status=500)
+    
+def liveness_view(request):
+    return JsonResponse({"status": "alive"})

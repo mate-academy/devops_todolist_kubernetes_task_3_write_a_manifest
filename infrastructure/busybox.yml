@@ -6,4 +6,4 @@ metadata:
 spec:
   containers:
     - name: busybox
-      image: ikulyk404/bysyboxplus:curl
+      image: ikulyk404/busyboxplus:curl

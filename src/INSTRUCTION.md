@@ -1,6 +1,6 @@
-kubectl apply -f infrastructure/namespace.yml
-kubectl apply -f infrastructure/todoapp-pod.yml
-kubectl apply -f infrastructure/busybox.yml
+kubectl apply -f .infrastructure/namespace.yml
+kubectl apply -f .infrastructure/todoapp-pod.yml
+kubectl apply -f .infrastructure/busybox.yml
 
 kubectl port-forward pod/todoapp 8081:8080 -n todoapp
 

@@ -1,17 +1,10 @@
 from django.contrib import admin
-from django.urls import include, path
-
-urlpatterns = [
-    path("", include("lists.urls")),
-    path("auth/", include("accounts.urls")),
-    path("api/", include("api.urls")),
-    path("api-auth/", include("rest_framework.urls")),
-    path("admin/", admin.site.urls),
-]
-
 from django.urls import path, include
 
 urlpatterns = [
-    path("", include("api.urls")),
-    # ... інші твої шляхи
+    # твої сторінки додатку:
+    path("", include("lists.urls")),        # якщо є lists/urls.py
+    path("auth/", include("accounts.urls")),# якщо є accounts/urls.py
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),      # <-- головне підключення API
 ]

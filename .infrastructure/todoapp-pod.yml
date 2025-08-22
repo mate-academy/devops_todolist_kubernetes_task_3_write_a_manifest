@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: todoapp
-      image: vitalysemeniv/todoapp:3.0.0
+      image: YOUR_DH_USERNAME/todoapp:3.0.0   # <-- замінити
       ports:
         - containerPort: 8000
       readinessProbe:
@@ -27,4 +27,3 @@ spec:
         periodSeconds: 10
         timeoutSeconds: 2
         failureThreshold: 3
-

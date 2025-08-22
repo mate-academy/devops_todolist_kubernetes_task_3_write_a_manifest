@@ -56,3 +56,43 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+        from django.http import JsonResponse, HttpResponse
+from django.db import connection
+
+def liveness_view(request):
+    return JsonResponse({"status": "alive"})
+
+def readiness_view(request):
+    try:
+        connection.ensure_connection()
+        return JsonResponse({"status": "ready"})
+    except Exception as e:
+        return HttpResponse(f"not ready: {e}", status=503)
+
+from django.http import JsonResponse, HttpResponse
+from django.db import connection
+
+def liveness_view(request):
+    return JsonResponse({"status": "alive"})
+
+def readiness_view(request):
+    try:
+        connection.ensure_connection()
+        return JsonResponse({"status": "ready"})
+    except Exception as e:
+        return HttpResponse(f"not ready: {e}", status=503)
+
+from django.http import JsonResponse, HttpResponse
+from django.db import connection
+
+def liveness_view(request):
+    return JsonResponse({"status": "alive"})
+
+def readiness_view(request):
+    try:
+        connection.ensure_connection()
+        return JsonResponse({"status": "ready"})
+    except Exception as e:
+        return HttpResponse(f"not ready: {e}", status=503)

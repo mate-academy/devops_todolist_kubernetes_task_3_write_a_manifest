@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todoapp
+  namespace: todoapp
+spec:
+  selector:
+    app: todoapp        # має збігатися з лейблом пода
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000  # має збігатися з контейнерним портом
+

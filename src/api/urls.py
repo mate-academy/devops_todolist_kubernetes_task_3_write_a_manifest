@@ -1,13 +1,11 @@
 from django.urls import path, include
+from api.views import liveness_view, readiness_view
 from rest_framework.routers import DefaultRouter
 
-# імпортуй свої viewsets та health views
-# приклад:
-# from api.views import TodoListViewSet, liveness_view, readiness_view
-
 router = DefaultRouter()
-# приклад реєстрації твоїх viewsets:
-# router.register(r'lists', TodoListViewSet, basename='lists')
+# якщо маєш свої ViewSet-и — зареєструй їх тут:
+# from api.views import TodoListViewSet
+# router.register(r"todos", TodoListViewSet, basename="todos")
 
 urlpatterns = [
     path("healthz/live", liveness_view, name="liveness"),

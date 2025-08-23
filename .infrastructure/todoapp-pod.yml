@@ -8,12 +8,12 @@ metadata:
 spec:
   containers:
     - name: todoapp
-      image: YOUR_DH_USERNAME/todoapp:3.0.0   # <-- замінити
+      image: vitalysemeniv/todoapp:3.0.0
       ports:
         - containerPort: 8000
       readinessProbe:
         httpGet:
-          path: /healthz/ready
+          path: /api/healthz/ready   # було /healthz/ready
           port: 8000
         initialDelaySeconds: 10
         periodSeconds: 5
@@ -21,7 +21,7 @@ spec:
         failureThreshold: 3
       livenessProbe:
         httpGet:
-          path: /healthz/live
+          path: /api/healthz/live    # було /healthz/live
           port: 8000
         initialDelaySeconds: 15
         periodSeconds: 10

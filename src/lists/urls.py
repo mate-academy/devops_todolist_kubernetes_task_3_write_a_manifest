@@ -11,3 +11,9 @@ urlpatterns = [
     path("todo/add/<int:todolist_id>/", views.add_todo, name="add_todo"),
     path("todolists/", views.overview, name="overview"),
 ]
+
+
+urlpatterns = [
+    path('readiness/', views.readiness, name='readiness'),
+    path('liveness/', views.liveness, name='liveness'),
+]

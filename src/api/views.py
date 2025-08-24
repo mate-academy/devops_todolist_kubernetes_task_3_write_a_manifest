@@ -6,7 +6,6 @@ from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
 from django.utils import timezone
-import time
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -56,3 +55,21 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def health(request):
+    """
+    Liveness endpoint for Kubernetes. Returns 200 OK if the app process is alive.
+    """
+    return HttpResponse("OK", content_type="text/plain", status=200)
+
+def ready(request):
+    """
+    Readiness endpoint for Kubernetes. Returns 200 OK if the app is ready to serve traffic.
+    This performs a simple database check using existing models.
+    """
+    try:
+        # Check database connectivity by performing a simple query
+        Todo.objects.all().exists()
+        return HttpResponse("READY", content_type="text/plain", status=200)
+    except Exception as e:
+        return HttpResponse("NOT READY", content_type="text/plain", status=503)

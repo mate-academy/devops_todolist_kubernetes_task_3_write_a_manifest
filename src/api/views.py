@@ -8,6 +8,15 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+from django.http import JsonResponse
+
+def readiness(request):
+    return JsonResponse({'status': 'ok'}, status=200)
+
+def liveness(request):
+    return JsonResponse({'status': 'alive'}, status=200)
+
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.

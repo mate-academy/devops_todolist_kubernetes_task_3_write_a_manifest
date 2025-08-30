@@ -4,8 +4,10 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
+from django.db import connections
+from django.db.utils import OperationalError
 import time
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
@@ -56,3 +58,58 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def readiness_check(request):
+    """
+    Readiness probe endpoint - проверяет готовность приложения к обслуживанию запросов.
+    Проверяет подключение к базе данных и основные зависимости.
+    """
+    try:
+        # Проверяем подключение к базе данных
+        db_conn = connections['default']
+        db_conn.cursor()
+        
+        # Можно добавить дополнительные проверки здесь
+        # Например, проверка внешних сервисов
+        
+        return JsonResponse({
+            'status': 'ready',
+            'timestamp': timezone.now().isoformat(),
+            'checks': {
+                'database': 'ok'
+            }
+        }, status=200)
+    except OperationalError:
+        return JsonResponse({
+            'status': 'not ready',
+            'timestamp': timezone.now().isoformat(),
+            'checks': {
+                'database': 'failed'
+            }
+        }, status=503)
+    except Exception as e:
+        return JsonResponse({
+            'status': 'not ready',
+            'timestamp': timezone.now().isoformat(),
+            'error': str(e)
+        }, status=503)
+
+
+def liveness_check(request):
+    """
+    Liveness probe endpoint - проверяет, что приложение живо и отвечает.
+    Простая проверка без тяжелых операций.
+    """
+    try:
+        return JsonResponse({
+            'status': 'alive',
+            'timestamp': timezone.now().isoformat(),
+            'uptime': time.time()
+        }, status=200)
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'timestamp': timezone.now().isoformat(),
+            'error': str(e)
+        }, status=500)

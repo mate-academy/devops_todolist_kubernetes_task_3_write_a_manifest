@@ -4,9 +4,15 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
+
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+
+
+start_time = time.time()
+# Define the startup period (in seconds)
+startup_period = 10
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -56,3 +62,11 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def health(request):
+    return HttpResponse("OK", status=200)
+
+def readiness(request):
+    # здесь можно добавить проверку базы, кэша и т.д.
+    return HttpResponse("READY", status=200)

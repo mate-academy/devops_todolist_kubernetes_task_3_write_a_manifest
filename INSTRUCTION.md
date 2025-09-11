@@ -29,5 +29,5 @@ Run this command to connect to the container shell:
 And run curl command inside the busybox container:
 
 ```shell
-    curl {todo-app-container-ip}:8080
+    curl {todo-app-container-ip}:8080/api/live/
 ```

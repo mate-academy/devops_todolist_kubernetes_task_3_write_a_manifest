@@ -1,5 +1,12 @@
 from django.contrib.auth.models import User
+
 from rest_framework import permissions, viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.status import (
+    HTTP_200_OK, 
+    HTTP_503_SERVICE_UNAVAILABLE
+)
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
@@ -7,6 +14,11 @@ from lists.models import Todo, TodoList
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+
+
+start_time = time.time()
+start_period = 40
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -46,6 +58,7 @@ class TodoListViewSet(viewsets.ModelViewSet):
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
 
+
 class TodoViewSet(viewsets.ModelViewSet):
 
     queryset = Todo.objects.all()
@@ -56,3 +69,17 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+@api_view(['GET'])
+@permission_classes([IsCreatorOrReadOnly])
+def health_check(request):
+    return Response({'status': True}, status=HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsCreatorOrReadOnly])
+def ready_check(request):
+    if time.time() < start_time + start_period:
+        return Response({'status': False}, status=HTTP_503_SERVICE_UNAVAILABLE)  
+    return Response({'status': True}, status=HTTP_200_OK)

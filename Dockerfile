@@ -1,21 +1,23 @@
 ARG PYTHON_VERSION=3.8
-FROM python:${PYTHON_VERSION} as builder
 
-# Set the working directory
+FROM python:${PYTHON_VERSION}-slim AS builder
+
 WORKDIR /app
+
 COPY . .
 
-# Stage 2: Run Stage
-FROM python:${PYTHON_VERSION} as run
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    python manage.py migrate
 
-WORKDIR /app
+FROM python:${PYTHON_VERSION}-slim
 
 ENV PYTHONUNBUFFERED=1
 
-COPY --from=builder /app .
+WORKDIR /app
 
-RUN pip install --upgrade pip && \
-    pip install -r src/requirements.txt
+COPY --from=build /usr/local /usr/local
+COPY --from=build /app /app
 
 EXPOSE 8080
 

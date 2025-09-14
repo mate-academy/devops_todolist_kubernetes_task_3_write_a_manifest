@@ -16,7 +16,6 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 COPY --from=builder /usr/local /usr/local
-COPY --from=builder /app /app
 
 COPY . .
 

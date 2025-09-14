@@ -4,11 +4,10 @@ FROM python:${PYTHON_VERSION}-slim AS builder
 
 WORKDIR /app
 
-COPY . .
-
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
-    python manage.py migrate
+RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,source=/src/requirements.txt,target=requirements.txt \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 FROM python:${PYTHON_VERSION}-slim
 
@@ -16,8 +15,10 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-COPY --from=build /usr/local /usr/local
-COPY --from=build /app /app
+COPY --from=builder /usr/local /usr/local
+COPY --from=builder /app /app
+
+COPY . .
 
 EXPOSE 8080
 

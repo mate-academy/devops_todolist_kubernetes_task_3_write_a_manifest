@@ -8,6 +8,28 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+
+start_time = time.time()
+startup_period = 40
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def readiness_check(request):
+    if time.time() < start_time + startup_period:
+        return Response("Not Ready", status=503)
+
+    return Response("Ready", status=200)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def health_check(request):
+   return Response("Healthy", status=200)
+
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.

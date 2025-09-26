@@ -13,11 +13,15 @@ spec:
         httpGet:
           path: /api/ready
           port: 8000
-        initialDelaySeconds: 5
+        initialDelaySeconds: 45
         periodSeconds: 5
+        timeoutSeconds: 3
+        failureThreshold: 3
       livenessProbe:
         httpGet:
           path: /api/health
           port: 8000
         initialDelaySeconds: 80
         periodSeconds: 5
+        timeoutSeconds: 3
+        failureThreshold: 3

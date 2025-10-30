@@ -8,6 +8,30 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+from django.http import HttpResponse, JsonResponse
+from django.db import connections, OperationalError
+
+
+def liveness(request):
+    """
+    Liveness probe — просто повертає 200 OK, якщо процес живий.
+    """
+    return HttpResponse("OK", status=200)
+
+
+def readiness(request):
+    """
+    Readiness probe — перевіряє, чи база даних доступна.
+    Якщо ні, повертає 503 (Service Unavailable).
+    """
+    db_conn = connections['default']
+    try:
+        db_conn.cursor()
+    except OperationalError:
+        return JsonResponse({"status": "unhealthy", "detail": "database unavailable"}, status=503)
+    return JsonResponse({"status": "ready"}, status=200)
+
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.

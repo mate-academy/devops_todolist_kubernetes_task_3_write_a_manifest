@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todoapp
+  namespace: todoapp
+spec:
+  containers:
+    - name: todoapp
+      image: mcisb/todoapp:3.0.0
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 8000
+
+      readinessProbe:
+        httpGet:
+          path: /api/health/ready/
+          port: 8000
+        initialDelaySeconds: 10
+        periodSeconds: 15
+        timeoutSeconds: 2
+
+      livenessProbe:
+        httpGet:
+          path: /api/health/live/
+          port: 8000
+        initialDelaySeconds: 20
+        periodSeconds: 20
+        timeoutSeconds: 2
+
+  restartPolicy: Always

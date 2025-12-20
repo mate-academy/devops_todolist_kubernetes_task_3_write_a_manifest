@@ -8,6 +8,9 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -34,13 +37,15 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAdminUser,)
 
-class ReadyViewSet(viewsets.ModelViewSet):
-    queryset = TodoList.objects.all()
-    serializer_class = TodoListSerializer
+class ReadyView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    def get(self, request):
+        return Response(status=200)
 
-class LiveViewSet(viewsets.ModelViewSet):
-    queryset = TodoList.objects.all()
-    serializer_class = TodoListSerializer
+class LiveView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    def get(self, request):
+        return Response(status=200)
 
 class TodoListViewSet(viewsets.ModelViewSet):
 

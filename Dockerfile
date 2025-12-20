@@ -1,7 +1,7 @@
 FROM python:3.8
 
 WORKDIR /app
-COPY . .
+COPY ./src /app
 
 # Install app
 RUN pip install --upgrade pip && \

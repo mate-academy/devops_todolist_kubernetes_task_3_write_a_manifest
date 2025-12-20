@@ -28,5 +28,4 @@ curl http://<TODOAPP_IP_ADDRESS>:8000
 kubectl port-forward todoapp 8000:8000 -n todoapp
 
 <!-- access app from your browser -->
-
 http://localhost:8000/

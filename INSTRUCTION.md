@@ -15,6 +15,15 @@ kubectl apply -f ./todoapp-pod.yml
 <!-- check pods is in the list -->
 kubectl get pods -n todoapp
 
+<!-- to test from app -->
+<!-- get todo app IP from command below -->
+kubectl get pod -n todoapp -o wide
+<!-- acess busybox  -->
+kubectl exec -n todoapp -it busybox -- sh
+<!--run -->
+curl http://<TODOAPP_IP_ADDRESS>:8000
+
+<!-- to test from your laptop -->
 <!-- add port forward -->
 kubectl port-forward todoapp 8000:8000 -n todoapp
 

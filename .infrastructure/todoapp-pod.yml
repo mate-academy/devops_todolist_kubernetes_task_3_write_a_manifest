@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todoapp
+  namespace: todoapp
+spec:
+  containers:
+    - name: todoapp
+      image: petrokurinnyi/todoapp:3.0.0
+      ports:
+        - containerPort: 8000
+      livenessProbe:
+        httpGet:
+          path: "/api/health/live/"
+          port: 8000
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: "/api/health/ready/"
+          port: 8000
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "250m"
+        limits:
+          memory: "512Mi"
+          cpu: "500m"

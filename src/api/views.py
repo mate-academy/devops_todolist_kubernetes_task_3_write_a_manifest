@@ -56,3 +56,14 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def liveness_probe(request):
+    return HttpResponse('{"status": "ok"}', status=200)
+
+def readiness_probe(request):
+    try:
+        # Перевірка бази через існуючий імпорт Todo
+        Todo.objects.all()[:1]
+        return HttpResponse('{"status": "ready"}', status=200)
+    except:
+        return HttpResponse('{"status": "not ready"}', status=503)

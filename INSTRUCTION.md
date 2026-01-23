@@ -6,7 +6,6 @@ This guide provides instructions on how to deploy the ToDo application and verif
 All manifests are located in the `.infrastructure` folder. You must apply them in the following order to ensure the namespace is created before the resources:
 
 1. **Create the Namespace:**
-   ```bash
    kubectl apply -f .infrastructure/namespace.yml
 
 2. Deploy the BusyBox pod: (This pod uses the ikulyk404/busyboxplus:curl image for testing):
@@ -26,5 +25,5 @@ Since you have a dedicated busybox pod running in the cluster, you can use it to
 Enter the busybox container:
 **kubectl exec -it busybox -n todoapp -- sh**
 Run curl commands inside the cluster:
-curl <ip todoapp>
+curl <kubectl get pod todoapp -n todoapp -o wide>
 Exit the container: exit

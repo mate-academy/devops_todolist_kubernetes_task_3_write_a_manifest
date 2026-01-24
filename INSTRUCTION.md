@@ -22,8 +22,10 @@ kubectl port-forward pod/todoapp 8081:8080 -n todoapp**
 
 5. How to test using the busyboxplus:curl container
 Since you have a dedicated busybox pod running in the cluster, you can use it to test internal connectivity:
+Get id Pod todoapp:
+**kubectl get pod todoapp -n todoapp -o wide**
 Enter the busybox container:
 **kubectl exec -it busybox -n todoapp -- sh**
 Run curl commands inside the cluster:
-curl <kubectl get pod todoapp -n todoapp -o wide>
+**curl <POD_IP>**
 Exit the container: exit

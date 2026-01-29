@@ -20,8 +20,11 @@
 
 ## Testing the Application Using BusyBox Container
 
-1. Execute a command in the BusyBox pod to test the readiness endpoint:
+1. Retrieve the APP_IP for the todoapp pod:
+   kubectl get pod todoapp-pod -n todoapp -o wide
+   The APP_IP will be listed under the "IP" column.
+2. Execute a command in the BusyBox pod to test the readiness endpoint:
    kubectl exec -it busybox -n todoapp -- curl -X GET http://<APP_IP>:8080/api/ready
-2. Execute a command in the BusyBox pod to test the liveness endpoint:
+3. Execute a command in the BusyBox pod to test the liveness endpoint:
    kubectl exec -it busybox -n todoapp -- curl -X GET http://<APP_IP>:8080/api/health
-3. Verify that both commands return a `200 OK` response.
+4. Verify that both commands return a `200 OK` response.

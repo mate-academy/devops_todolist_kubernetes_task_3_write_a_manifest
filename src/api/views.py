@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
 
-from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
+from .serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
@@ -56,3 +56,11 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+# ... ваш існуючий код ...
+
+def health_check(request):
+    return HttpResponse("OK", status=200)
+
+def readiness_check(request):
+    return HttpResponse("Ready", status=200)

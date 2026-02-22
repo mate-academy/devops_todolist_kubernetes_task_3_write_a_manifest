@@ -4,8 +4,10 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
+from django.db import connection
+from django.db.utils import OperationalError
 import time
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
@@ -56,3 +58,18 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def readiness(request):
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            cursor.fetchone()
+    except OperationalError:
+        return JsonResponse({"status": "not ready"}, status=503)
+
+    return JsonResponse({"status": "ready"}, status=200)
+
+
+def liveness(request):
+    return JsonResponse({"status": "alive"}, status=200)

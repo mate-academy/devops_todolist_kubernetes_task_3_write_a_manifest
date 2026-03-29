@@ -1,10 +1,10 @@
-ARG PYTHON_VERSION=3.14
+ARG PYTHON_VERSION=3.12
 
 
 FROM python:${PYTHON_VERSION}-slim
 LABEL authors="Ivan"
 WORKDIR /todoapp
-COPY .. .
+COPY . .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 

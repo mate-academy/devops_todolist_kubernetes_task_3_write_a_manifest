@@ -1,5 +1,5 @@
 ## To apply namespace
-`kubectl apply -f namespace.ym`
+`kubectl apply -f namespace.yml`
 
 ## To apply busybox
 `kubectl apply -f busybox.yml`
@@ -22,4 +22,4 @@
 `kubectl exec -it busybox-pod -n todoapp -- sh`
 3. Execute command:
 
-`curl 10.1.0.24:8000`
+`curl <todoapp-pod_IP>:8000`

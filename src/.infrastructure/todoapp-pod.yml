@@ -11,11 +11,11 @@ spec:
         - containerPort: 8000
       livenessProbe:
         httpGet:
-          path: api/liveness/
+          path: /api/liveness/
           port: 8000
         periodSeconds: 10
       readinessProbe:
         httpGet:
-          path: api/readiness/
+          path: /api/readiness/
           port: 8000
         periodSeconds: 10

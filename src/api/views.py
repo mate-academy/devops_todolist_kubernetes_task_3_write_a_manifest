@@ -1,3 +1,6 @@
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from django.db import connection
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
 
@@ -56,3 +59,24 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def liveness(request):
+    return Response({"status": "live", "time": timezone.now()})
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def readiness(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+    except Exception as e:
+        return Response({"status": "unavailable", "reason": str(e)}, status=503)
+
+    return Response(
+        {
+            "status": "ready",
+        }
+    )

@@ -1,3 +1,5 @@
+from os import getenv
+
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
 
@@ -7,6 +9,11 @@ from lists.models import Todo, TodoList
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+
+
+start_time = time.time()
+startup_period = int(getenv("startup_period", 60))
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -56,3 +63,14 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def is_ready(request):
+    if time.time() < start_time + startup_period:
+        return HttpResponse("Not Ready", status=503)
+    else:
+        return HttpResponse("Ready", status=200)
+
+
+def is_live(request):
+    return HttpResponse("Healthy", status=200)

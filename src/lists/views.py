@@ -1,3 +1,5 @@
+import time
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -5,6 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from lists.forms import TodoForm, TodoListForm
 from lists.models import Todo, TodoList
 
+start_time = time.time()
+startup_period = 60
 
 def index(request):
     return render(request, "lists/index.html", {"form": TodoForm()})
@@ -78,3 +82,13 @@ def add_todolist(request):
             return render(request, "lists/overview.html", {"form": form})
 
     return redirect("lists:index")
+
+def is_ready(request):
+    if time.time() < start_time + startup_period:
+        return HttpResponse("Not Ready", status=503)
+    else:
+        return HttpResponse("Ready", status=200)
+
+
+def is_live(request):
+    return HttpResponse("Healthy", status=200)

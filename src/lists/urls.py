@@ -10,4 +10,6 @@ urlpatterns = [
     path("todolist/add/", views.add_todolist, name="add_todolist"),
     path("todo/add/<int:todolist_id>/", views.add_todo, name="add_todo"),
     path("todolists/", views.overview, name="overview"),
+    path("live/", views.is_live, name="is_live"),
+    path("ready/", views.is_ready, name="is_ready"),
 ]

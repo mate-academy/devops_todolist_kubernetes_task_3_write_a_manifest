@@ -1,5 +1,3 @@
-import time
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -15,7 +13,7 @@ def index(request):
 def todolist(request, todolist_id):
     todolist = get_object_or_404(TodoList, pk=todolist_id)
     if request.method == "POST":
-        redirect("lists:add_todo", todolist_id=todolist_id)
+        return redirect("lists:add_todo", todolist_id=todolist_id)
 
     return render(
         request, "lists/todolist.html", {"todolist": todolist, "form": TodoForm()}

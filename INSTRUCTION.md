@@ -18,7 +18,7 @@ Run command for port-forward port on localhost to port in pod:
 
 ``` kubectl port-forward -n todoapp pod/todoapp 8081:8080```
 
-8081 it's localport, and try connect in browser with this url:
+8081 it's localport, and try to connect in browser with this url:
 http://localhost:8081
 
 ### 2. From cluster network:

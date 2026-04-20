@@ -2,7 +2,7 @@ ARG PYTHON_VERSION=3.8
 FROM python:${PYTHON_VERSION} AS builder
 
 WORKDIR /app
-COPY ./src/ .
+COPY . .
 LABEL authors="Keng"
 
 FROM python:${PYTHON_VERSION} AS run
@@ -13,8 +13,9 @@ ENV PYTHONUNBUFFERED=1
 
 COPY --from=builder /app .
 
-RUN pip install -r requirements.txt
-RUN python manage.py migrate
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
 
 EXPOSE 8080
 # Run database migrations and start the Django application

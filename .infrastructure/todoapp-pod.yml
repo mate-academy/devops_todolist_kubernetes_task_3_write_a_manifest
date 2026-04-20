@@ -11,15 +11,18 @@ spec:
     image: andriis9/todoapp:3.0.0
     ports:
      - containerPort: 8080
+    env:
+      - name: startup_period
+        value: "40"
     livenessProbe:
      httpGet:
-       path: /live
+       path: /api/live
        port: 8080
      initialDelaySeconds: 30
      periodSeconds: 5
     readinessProbe:
       httpGet:
-        path: /ready
+        path: /api/ready
         port: 8080
       initialDelaySeconds: 5
       periodSeconds: 5

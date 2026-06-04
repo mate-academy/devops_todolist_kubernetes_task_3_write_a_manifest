@@ -4,9 +4,11 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
+from django.db import connection
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -46,6 +48,7 @@ class TodoListViewSet(viewsets.ModelViewSet):
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
 
+
 class TodoViewSet(viewsets.ModelViewSet):
 
     queryset = Todo.objects.all()
@@ -56,3 +59,16 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+
+def liveness_check(request):
+    return HttpResponse("OK", status=200)
+
+
+def readiness_check(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1;")
+        return HttpResponse("OK", status=200)
+    except Exception as e:
+        return HttpResponse("Database down", status=503)

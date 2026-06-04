@@ -35,7 +35,7 @@ kubectl get all -n todoapp
 Forward a local port to the TodoApp pod running inside the cluster:
 
 ```bash
-kubectl port-forward pod/todoapp -n todoapp 8080:8080
+kubectl port-forward pod/todoapp-app -n todoapp 8080:8080
 ```
 
 Then open a new terminal or browser and send a request:
@@ -72,7 +72,7 @@ curl http://<TODOAPP_POD_IP>:8080
 To verify that the readiness and liveness probes are working correctly:
 
 ```bash
-kubectl describe pod todoapp -n todoapp
+kubectl describe pod todoapp-app -n todoapp
 ```
 
 Look for the `Conditions` section (readiness) and `Events` section (liveness failures, if any).

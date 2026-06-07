@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todoapp-pod
+  namespace: todoapp
+  labels:
+    app: todoapp
+spec:
+  containers:
+  - name: django-app
+    image: volodymyrlp/todoapp:3.0.0
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 8000
+
+    livenessProbe:
+      httpGet:
+        path: /api/healthz/liveness/
+        port: 8000
+      initialDelaySeconds: 15
+      periodSeconds: 10
+
+    readinessProbe:
+      httpGet:
+        path: /api/healthz/readiness/
+        port: 8000
+      initialDelaySeconds: 15
+      periodSeconds: 10

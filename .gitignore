@@ -1,3 +1,18 @@
+# sqlite db
+*.db
+*.sqlite3
 
+# sublime related files
+*.sublime-project
+*.sublime-workspace
+
+# test, build, log
+build
+docs/_build
+dist
+results
+logs
+*.logs
+venv
 */*/__pycache__/*
 */*/*/__pycache__/*

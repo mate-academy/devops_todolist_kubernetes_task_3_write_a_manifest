@@ -1,5 +1,5 @@
 # Use the official Alpine Linux image as a base
-FROM alpine:latest
+FROM python:3.11-slim
 
 # Install curl
 RUN apk update && apk add curl

@@ -6,7 +6,8 @@ metadata:
 spec:
   containers:
   - name: todoapp
-    image: olexandrkv/todoapp:3.0.1
+    image: olexandrkv/todoapp:3.0.0
+    imagePullPolicy: Always
     ports:
     - containerPort: 8000
     readinessProbe:

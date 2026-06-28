@@ -8,12 +8,12 @@ kubectl apply -f .infrastructure/todoapp-pod.yml
 # Тестування через port-forward
 kubectl port-forward pod/todoapp 8000:8000 -n todoapp
 # В іншому терміналі перевірте кінцеві точки
-curl http://localhost:8000/api/ready/
-curl http://localhost:8000/api/live/
+curl http://localhost:8000/api/readiness/
+curl http://localhost:8000/api/liveness/
 
 # Тестування через busybox
-kubectl exec -it busybox -n todoapp -- curl http://todoapp:8000/api/ready/
-kubectl exec -it busybox -n todoapp -- curl http://todoapp:8000/api/live/
+kubectl exec -it busybox -n todoapp -- curl http://todoapp:8000/api/readiness/
+kubectl exec -it busybox -n todoapp -- curl http://todoapp:8000/api/liveness/
 
 # Перевірити статус пода
 kubectl get pods -n todoapp

@@ -1,5 +1,9 @@
 from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from rest_framework import permissions, viewsets
+
+# ... твой старый код (импорты моделей, сериализаторов и т.д.) ...
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
@@ -7,6 +11,9 @@ from lists.models import Todo, TodoList
 from django.http import HttpResponse
 from django.utils import timezone
 import time
+
+start_time = time.time()
+startup_period = 40
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -56,3 +63,15 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+@api_view(['GET'])
+def liveness_check(request):
+    return Response("OK", status=200)
+
+@api_view(['GET'])
+def readiness_check(request):
+   if time.time() < start_time + startup_period:
+       return Response("Not Ready", status=503)
+   else:
+       return Response("Ready", status=200)
+

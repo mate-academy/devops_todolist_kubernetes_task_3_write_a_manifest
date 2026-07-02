@@ -29,9 +29,12 @@ kubectl exec -it busybox -n todoapp -- sh
 ```
 # Inside the busybox terminal, use curl to check the application's liveness endpoint:
 
-curl http://todoapp-pod:8000/api/liveness/
+```bash
+curl http://todoapp-service:8000/api/liveness/
+```
 
 # To exit the busybox container terminal, simply type:
 
+```bash
 exit
-
+```

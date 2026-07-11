@@ -1,0 +1,23 @@
+apiVersion: v1          
+kind: Pod               
+metadata:
+  name: todoapp-pod           
+  namespace: todoapp    
+spec:                   
+  containers:           
+  - name: todoapp-pod         
+    image: trickykot3/todoapp:3.0.0        
+    ports:
+    - containerPort: 8000
+    livenessProbe:
+      httpGet:
+        path: /api/health/
+        port: 8000
+      initialDelaySeconds: 10   # ждать 10с перед первым запросом
+      periodSeconds: 5          # потом опрашивать каждые 5с
+    readinessProbe:
+      httpGet:
+        path: /api/ready/
+        port: 8000
+      initialDelaySeconds: 5
+      periodSeconds: 5

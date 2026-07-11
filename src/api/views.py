@@ -5,7 +5,6 @@ from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
-from django.utils import timezone
 import time
 
 

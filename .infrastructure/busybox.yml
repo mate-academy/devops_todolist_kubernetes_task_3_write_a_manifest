@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: todoapp
+spec:
+  containers:
+  - name: busybox
+    image: ikulyk404/busyboxplus:curl
+    command:
+      - /bin/sh
+      - -c
+    args:
+      - sleep 3600
+
+# Note: The required image may be incompatible with the cluster node architecture.
+# On an amd64 kind cluster, the container fails with:
+# "exec /bin/sh: exec format error".

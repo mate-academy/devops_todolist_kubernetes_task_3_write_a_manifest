@@ -35,7 +35,7 @@ kubectl apply -f .infrastructure/namespace.yml
 
 It creates or updates the ToDo application Pod in the todoapp namespace based on the manifest.
 ```bash
-kubectl apply -f .infrastructure/todaapp-pod.yml
+kubectl apply -f .infrastructure/todoapp-pod.yml
 ```
 It creates or updates the busybox application Pod in the todoapp namespace based on the manifest.
 ```bash

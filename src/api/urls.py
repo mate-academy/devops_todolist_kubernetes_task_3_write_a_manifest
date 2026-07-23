@@ -1,5 +1,4 @@
 from django.urls import include, path
-from flask import Response, app
 from rest_framework.routers import DefaultRouter
 
 from api import views
@@ -11,7 +10,6 @@ router.register(r"todos", views.TodoViewSet)
 
 app_name = "api"
 urlpatterns = [
-    path("", include(router.urls))
     path("", include(router.urls)),
     path("health/", views.health_check),
     path("ready/", views.readiness_check)

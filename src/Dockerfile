@@ -1,4 +1,12 @@
-FROM ubuntu:latest
-LABEL authors="DianaKhmeliuk"
+FROM python:3.8
+WORKDIR /api
 
-ENTRYPOINT ["top", "-b"]
+COPY requirements.txt .
+
+RUN pip install -r requirements.txt
+
+COPY . .
+
+EXPOSE 8080
+
+ENTRYPOINT ["python", "manage.py", "runserver", "0.0.0.0:8080"]

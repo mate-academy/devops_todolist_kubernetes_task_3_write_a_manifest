@@ -60,10 +60,8 @@ class TodoViewSet(viewsets.ModelViewSet):
 start_time = time.time()
 start_pause = 40
 
-
 def liveness(request):
     return HttpResponse("Ok", status=200)
-
 
 def readiness(request):
     if time.time() <= start_time + start_pause:

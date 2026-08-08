@@ -56,7 +56,6 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
-
 start_time = time.time()
 start_pause = 40
 

@@ -1,10 +1,7 @@
-FROM python:3.8
-
+FROM python:3.11-slim-bookworm
 WORKDIR /app
-COPY . .
-COPY src/requirements.txt .
-RUN pip install -r src/requirements.txt
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 COPY . .
 EXPOSE 8000
-
-CMD ["sh", "-c", "python src/manage.py migrate && python src/manage.py runserver 0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -6,7 +6,13 @@
 ```bash
 kubectl apply -f .infrastructure/namespace.yml
 ```
-2. Launch a Busyboxcontainer in the cluster
+Wait until the Pod is ready
+```
+bash
+kubectl get pods -n todoapp -w
+```
+
+2. Launch a Busybox container in the cluster
 ```bash
 kubectl apply -f .infrastructure/busybox.yml
 ```

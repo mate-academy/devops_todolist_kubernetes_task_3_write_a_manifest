@@ -6,9 +6,9 @@
 ```bash
 kubectl apply -f .infrastructure/namespace.yml
 ```
-Wait until the Pod is ready
+
+Wait until the Pod is ready:
 ```
-bash
 kubectl get pods -n todoapp -w
 ```
 

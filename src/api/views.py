@@ -5,8 +5,16 @@ from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
 from django.http import HttpResponse
-from django.utils import timezone
 import time
+
+def readiness(request):
+    """Readiness probe — confirms the app is accepting requests."""
+    return HttpResponse("ready", status=200)
+
+def liveness(request):
+    """Liveness probe — confirms the process is alive."""
+    return HttpResponse("alive", status=200)
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

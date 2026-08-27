@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from rest_framework import permissions, viewsets
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
@@ -56,3 +57,10 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+    def readiness(request):
+        # Можна додати перевірку підключення до бази даних, якщо потрібно
+        return HttpResponse("OK", status=200)
+
+    def liveness(request):
+        return HttpResponse("OK", status=200)

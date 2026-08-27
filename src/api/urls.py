@@ -12,3 +12,8 @@ app_name = "api"
 urlpatterns = [
     path("", include(router.urls))
 ]
+
+urlpatterns = [.
+    path('health/readiness/', readiness, name='readiness'),
+    path('health/liveness/', liveness, name='liveness'),
+]

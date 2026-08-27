@@ -19,7 +19,7 @@ Wait until the application pods are in the `Running` state and ready.
 Forward the Kubernetes service port to the local machine:
 
 ```bash
-kubectl port-forward pod/todoapp 8080:8080
+kubectl port-forward -n todoapp pod/todoapp 8080:8080
 ```
 
 After port forwarding is started, the application is available at:
@@ -33,7 +33,7 @@ http://localhost:8080
 First you need to now your app's ip adresss:
 
 ```bash
-kubectl get pods -n mateapp -o wide
+kubectl get pods -n todoapp -o wide
 ```
 
 Then connect to busybox:

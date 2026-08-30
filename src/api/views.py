@@ -56,3 +56,18 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+        def readiness(request):
+            return HttpResponse("ready", status=200)
+
+        def liveness(request):
+            return HttpResponse("alive", status=200)
+from django.http import JsonResponse
+
+
+def readiness(request):
+    return JsonResponse({"status": "ready"})
+
+
+def liveness(request):
+    return JsonResponse({"status": "alive"})

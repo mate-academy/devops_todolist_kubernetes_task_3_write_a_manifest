@@ -22,7 +22,8 @@ The ToDo application image is available on Docker Hub:
 
 
 
-aezakmi565/todoapp:3.0.0
+{yourname}/todoapp:3.0.0
+
 
 
 
@@ -32,7 +33,7 @@ To build the image from the src directory:
 
 cd src
 
-docker build -t aezakmi565/todoapp:3.0.0 .
+docker build -t {yourname}/todoapp:3.0.0 .
 
 
 
@@ -42,7 +43,7 @@ To push the image to Docker Hub:
 
 
 
-docker push aezakmi565/todoapp:3.0.0
+docker push {yourname}/todoapp:3.0.0
 
 
 

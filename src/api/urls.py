@@ -1,6 +1,8 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+
 from api import views
+
 
 router = DefaultRouter()
 router.register(r"users", views.UserViewSet)
@@ -13,14 +15,4 @@ urlpatterns = [
     path("readiness/", views.readiness, name="readiness"),
     path("liveness/", views.liveness, name="liveness"),
     path("", include(router.urls)),
-]
-from django.urls import path
-
-from . import views
-
-urlpatterns = [
-    # existing URLs...
-
-    path("readiness/", views.readiness, name="readiness"),
-    path("liveness/", views.liveness, name="liveness"),
 ]

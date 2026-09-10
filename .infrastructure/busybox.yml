@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: busyboxplus
+ namespace: todoapp
+ labels:
+   app: busyboxplus
+spec:
+ containers:
+ - name: busyboxplus
+   image: ikulyk404/busyboxplus:curl
+   args:
+   - sleep
+   - "1000"

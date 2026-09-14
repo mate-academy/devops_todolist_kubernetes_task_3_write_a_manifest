@@ -1,3 +1,14 @@
+The public Docker image for this application is available at:
+* **Docker Hub Link:** https://hub.docker.com/repository/docker/vadym192/todoapp/
+* **Image Name:** `vadym192/todoapp:3.0.0`
+
+```bash
+docker build -t vadym192/todoapp:3.0.0 .
+docker push vadym192/todoapp:3.0.0
+```
+---
+
+
 ### 1. Create the Namespace
 Create the dedicated `todoapp` isolated namespace first:
 

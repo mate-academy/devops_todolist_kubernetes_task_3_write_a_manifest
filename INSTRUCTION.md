@@ -22,10 +22,10 @@ kubectl apply -f .infrastructure/busybox.yml
 2. Test ToDo Application Using port-forward
 To access the ToDo application directly from your local machine via port forwarding:
 
-Forward local port 8000 to port 8000 on the todapp pod within the todoapp namespace:
+Forward local port 8000 to port 8000 on the todoapp pod within the todoapp namespace:
 
 
-kubectl port-forward pod/todapp -n todoapp 8000:8000
+kubectl port-forward pod/todoapp -n todoapp 8000:8000
 Open your browser or use curl in another terminal window to access the landing page or API:
 
 Landing page: http://localhost:8000/
@@ -44,8 +44,8 @@ Open an interactive shell inside the running busybox pod:
 kubectl exec -it busybox -n todoapp -- sh
 Once inside the container, use curl to send requests to the ToDo application pod (using its service name or internal IP, or querying localhost if testing directly):
 
-curl http://todapp:8000/api/health/
-curl http://todapp:8000/api/readiness/
+curl http://todoapp:8000/api/health/
+curl http://todoapp:8000/api/readiness/
 Exit the container shell by typing:
 
 exit

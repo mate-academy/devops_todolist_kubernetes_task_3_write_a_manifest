@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: todapp
+  name: todoapp
   namespace: todoapp
 spec:
   containers:
-    - name: todapp
+    - name: todoapp
       image: mulykovdockerdevops/todoapp:3.0.0
       ports:
         - containerPort: 8000

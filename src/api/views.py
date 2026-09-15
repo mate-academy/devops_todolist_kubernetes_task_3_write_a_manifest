@@ -56,3 +56,19 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+class HealthCheckView(APIView):
+    """
+    A simple view to check the health of the application.
+    """
+
+    def get(self, request):
+        return Response({"status": "healthy"}, status=status.HTTP_200_OK)
+
+class ReadinessCheckView(APIView):
+    """
+    A simple view to check the readiness of the application.
+    """
+
+    def get(self, request):
+        return Response({"status": "ready"}, status=status.HTTP_200_OK)

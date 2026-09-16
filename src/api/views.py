@@ -4,9 +4,16 @@ from rest_framework import permissions, viewsets
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
+
 from django.http import HttpResponse
-from django.utils import timezone
-import time
+
+
+def readiness_check(request):
+    return HttpResponse("Ready", status=200)
+
+
+def liveness_check(request):
+    return HttpResponse("Healthy", status=200)
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
@@ -26,6 +33,7 @@ class IsCreatorOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `creator`.
         return obj.creator == request.user
+    
 
 
 class UserViewSet(viewsets.ModelViewSet):

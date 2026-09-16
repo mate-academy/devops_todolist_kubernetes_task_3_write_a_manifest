@@ -8,6 +8,14 @@ from django.http import HttpResponse
 from django.utils import timezone
 import time
 
+
+def readiness_check(request):
+    return HttpResponse("Ready", status=200)
+
+
+def liveness_check(request):
+    return HttpResponse("Healthy", status=200)
+
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -26,6 +34,7 @@ class IsCreatorOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `creator`.
         return obj.creator == request.user
+    
 
 
 class UserViewSet(viewsets.ModelViewSet):

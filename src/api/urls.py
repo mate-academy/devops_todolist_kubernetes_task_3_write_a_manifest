@@ -1,7 +1,9 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-
+from django.http import HttpResponse
 from api import views
+from django.urls import path
+
 
 router = DefaultRouter()
 router.register(r"users", views.UserViewSet)
@@ -12,3 +14,5 @@ app_name = "api"
 urlpatterns = [
     path("", include(router.urls))
 ]
+
+

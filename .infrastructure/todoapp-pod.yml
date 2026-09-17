@@ -1,0 +1,25 @@
+apiVersion : v1
+kind: Pod
+metadata:
+  name: mateapp
+  namespace: todoapp
+  labels:
+    app: kube-todo
+spec:
+  containers:
+    - name: todoapp
+      image: nicotqq/todoapp:3.0.0
+      ports:
+        - containerPort: 8080
+      livenessProbe:
+        httpGet:
+          path: /liveness_view
+          port: 8080
+        initialDelaySeconds: 60
+        periodSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /readiness_view
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 5

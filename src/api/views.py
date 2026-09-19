@@ -58,5 +58,5 @@ class TodoViewSet(viewsets.ModelViewSet):
 def health_check(request):
     return HttpResponse("Healthy", status=200)
 
-def readyness_check(request):
+def readiness_check(request):
     return HttpResponse("Ready", status=200)

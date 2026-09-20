@@ -56,3 +56,9 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def health_liveness(request):
+        return HttpResponse("Liveness OK", status=200)
+
+def health_readiness(request):
+        return HttpResponse("Readiness OK", status=200)

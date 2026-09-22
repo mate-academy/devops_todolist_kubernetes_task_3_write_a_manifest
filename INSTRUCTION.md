@@ -2,18 +2,18 @@
 
 ## Apply Kubernetes manifests
 
-Apply all manifests from the infrastructure directory:
+Apply all manifests from the .infrastructure directory:
 
 ```bash
-kubectl apply -f infrastructure/
+kubectl apply -f .infrastructure/
 ```
 
 If the manifests are applied one by one, create the namespace first and then apply the pods:
 
 ```bash
-kubectl apply -f infrastructure/namespace.yml
-kubectl apply -f infrastructure/todoapp-pod.yml
-kubectl apply -f infrastructure/busybox.yml
+kubectl apply -f .infrastructure/namespace.yml
+kubectl apply -f .infrastructure/todoapp-pod.yml
+kubectl apply -f .infrastructure/busybox.yml
 ```
 
 Check that the pods are running:

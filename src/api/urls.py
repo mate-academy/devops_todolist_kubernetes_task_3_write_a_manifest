@@ -1,16 +1,8 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from django.urls import path
+from .views import liveness_check, readiness_check # Імпортуйте ваші нові views
 
-from api import views
-
-router = DefaultRouter()
-router.register(r"users", views.UserViewSet)
-router.register(r"todolists", views.TodoListViewSet)
-router.register(r"todos", views.TodoViewSet)
-
-app_name = "api"
 urlpatterns = [
-    path("", include(router.urls)),
-    path("healthz/", views.health_check_view, name="health-check"),
-    path("ready/", views.readiness_check_view, name="ready-check")
-]
+    # ... ваші наявні url-патерни ...
+   path('healthz/live/', liveness_check, name='liveness_check'),
+   path('healthz/ready/', readiness_check, name='readiness_check')]
+

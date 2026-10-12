@@ -1,10 +1,21 @@
-#!/usr/bin/env python
-import os
-import sys
+# Gebruik een officiële Python runtime die voldoet aan de vereisten
+FROM python:3.9-slim
 
-if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "todolist.settings")
+# Stel de werkomgeving in
+WORKDIR /app
 
-    from django.core.management import execute_from_command_line
+# Installeer systeemvereisten en afhankelijkheden
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-    execute_from_command_line(sys.argv)
+# Kopieer de rest van de applicatiecode
+COPY . .
+
+# Voer database migraties uit tijdens het builden (of via entrypoint)
+RUN python manage.py migrate
+
+# Exposeer de poort waarop Django draait
+EXPOSE 8000
+
+# Start de Django development server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,14 +1,9 @@
-from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from django.urls import path
+from .views import liveness_probe, readiness_probe
 
-from api import views
-
-router = DefaultRouter()
-router.register(r"users", views.UserViewSet)
-router.register(r"todolists", views.TodoListViewSet)
-router.register(r"todos", views.TodoViewSet)
-
-app_name = "api"
 urlpatterns = [
-    path("", include(router.urls))
+    # ... ваші існуючі шляхи API ...
+    path('health/liveness/', liveness_probe, name='liveness_probe'),
+    path('health/readiness/', readiness_probe, name='readiness_probe'),
 ]
+

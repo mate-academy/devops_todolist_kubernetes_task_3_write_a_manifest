@@ -1,3 +1,10 @@
 
 */*/__pycache__/*
 */*/*/__pycache__/*
+# Virtual environment
+venv/
+src/venv/
+
+# SQLite database
+*.sqlite3
+src/db.sqlite3

@@ -56,3 +56,10 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+# Health check endpoints for Kubernetes probes
+def readiness(request):
+    return HttpResponse("ready", status=200, content_type="text/plain")
+
+
+def liveness(request):
+    return HttpResponse("alive", status=200, content_type="text/plain")

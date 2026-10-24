@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - `kubectl` installed and configured
-- Docker image `dmytro0908/todoapp:3.0.0` pushed to Docker Hub
+- Docker image `dmytr0908/todoapp:3.0.0` pushed to Docker Hub
 
 ## Apply manifests
 

@@ -8,18 +8,18 @@ metadata:
 spec:
   containers:
     - name: todoapp
-      image: dmytro0908/todoapp:3.0.0
+      image: dmytr0908/todoapp:3.0.0
       ports:
-        - containerPort: 8001
+        - containerPort: 8000
       readinessProbe:
         httpGet:
           path: /api/healthz/readiness/
-          port: 8001
+          port: 8000
         initialDelaySeconds: 5
         periodSeconds: 10
       livenessProbe:
         httpGet:
           path: /api/healthz/liveness/
-          port: 8001
+          port: 8000
         initialDelaySeconds: 15
         periodSeconds: 20

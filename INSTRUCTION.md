@@ -1,4 +1,5 @@
 # instructions on how to apply all manifests
+cd /path/to/project/.infrastructure
 kubectl apply -f namespace.yml
 kubectl apply -f busybox.yml
 kubectl apply -f todoapp-pod.yml

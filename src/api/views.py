@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db import connection
 from rest_framework import permissions, viewsets
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
@@ -56,3 +57,15 @@ class TodoViewSet(viewsets.ModelViewSet):
         user = self.request.user
         creator = user if user.is_authenticated else None
         serializer.save(creator=creator)
+
+def liveness(request):
+    return HttpResponse("OK", status=200)
+
+
+def readiness(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        return HttpResponse("Ready", status=200)
+    except Exception:
+        return HttpResponse("Not ready", status=503)

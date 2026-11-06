@@ -6,3 +6,5 @@ RUN apk update && apk add curl
 
 # Set the entry point to bash for testing purposes
 ENTRYPOINT ["/bin/sh"]
+
+# comment placeholder

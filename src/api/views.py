@@ -1,12 +1,26 @@
 from django.contrib.auth.models import User
+from django.db import connection
+from django.http import JsonResponse
 from rest_framework import permissions, viewsets
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
-from django.utils import timezone
-import time
+
+def liveness(request):
+    """Liveness probe: the process is up and able to serve HTTP."""
+    return JsonResponse({"status": "alive"}, status=200)
+ 
+ 
+def readiness(request):
+    """Readiness probe: the app can reach its database and is ready for traffic."""
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            cursor.fetchone()
+    except Exception as exc:
+        return JsonResponse({"status": "not ready", "error": str(exc)}, status=503)
+    return JsonResponse({"status": "ready"}, status=200)
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

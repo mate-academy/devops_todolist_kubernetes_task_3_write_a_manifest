@@ -15,9 +15,9 @@ Before applying, ensure `todoapp-pod.yml` has `readinessProbe` aligned with
 Create the namespace first, then apply both pod manifests:
 
 ```sh
-kubectl apply -f .infrasctructure/namespace.yml
-kubectl apply -f .infrasctructure/todoapp-pod.yml
-kubectl apply -f .infrasctructure/busybox.yml
+kubectl apply -f .infrastructure/namespace.yml
+kubectl apply -f .infrastructure/todoapp-pod.yml
+kubectl apply -f .infrastructure/busybox.yml
 kubectl wait --for=condition=Ready pod/todoapp -n todoapp --timeout=120s
 kubectl get pods -n todoapp -o wide
 ```

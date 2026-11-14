@@ -10,5 +10,7 @@ router.register(r"todos", views.TodoViewSet)
 
 app_name = "api"
 urlpatterns = [
+    path("liveness/", views.liveness, name="liveness"),
+    path("readiness/", views.readiness, name="readiness"),
     path("", include(router.urls))
 ]

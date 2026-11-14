@@ -1,12 +1,30 @@
 from django.contrib.auth.models import User
+from django.db import DatabaseError, connection
+from django.http import HttpResponse
+from django.views.decorators.http import require_safe
 from rest_framework import permissions, viewsets
 
 from api.serializers import TodoListSerializer, TodoSerializer, UserSerializer
 from lists.models import Todo, TodoList
 
-from django.http import HttpResponse
-from django.utils import timezone
-import time
+
+@require_safe
+def liveness(request):
+    """Confirm the application can respond without checking dependencies."""
+    return HttpResponse("OK", content_type="text/plain")
+
+
+@require_safe
+def readiness(request):
+    """Confirm the database is available before accepting traffic."""
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            cursor.fetchone()
+    except DatabaseError:
+        return HttpResponse("Not ready", status=503, content_type="text/plain")
+    return HttpResponse("OK", content_type="text/plain")
+
 
 class IsCreatorOrReadOnly(permissions.BasePermission):
     """

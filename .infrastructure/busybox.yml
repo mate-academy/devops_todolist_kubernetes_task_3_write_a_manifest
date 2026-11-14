@@ -7,3 +7,6 @@ spec:
   containers:
   - name: busybox
     image: ikulyk404/busyboxplus:curl
+    args:
+    - sleep
+    - "3600"

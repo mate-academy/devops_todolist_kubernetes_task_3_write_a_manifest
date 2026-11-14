@@ -1,18 +1,41 @@
-Start:
-image user2134567432/todoapp:3.0.0
+# Run ToDo app in Kubernetes
 
-apply manifest:
+Image: `user2134567432/todoapp:3.0.0`
+
+## 1. Apply manifests
+
+```bash
 kubectl apply -f .infrastructure/namespace.yml
 kubectl apply -f .infrastructure/todoapp-pod.yml
 kubectl apply -f .infrastructure/busybox.yml
+kubectl get pods -n todoapp
+```
 
-check: kubectl get pods -n todoapp
-check: kubectl port-forward pod/todoapp 8000:8000 -n todoapp
+## 2. Test with port-forward
 
+```bash
+kubectl port-forward pod/todoapp 8000:8000 -n todoapp
+```
+
+In another terminal:
+
+```bash
 curl http://localhost:8000/api/liveness/
 curl http://localhost:8000/api/readiness/
+```
 
-check ip: kubectl get pod todoapp -n todoapp -o wide
+## 3. Test with busyboxplus:curl
 
-kubectl exec -it busybox -n todoapp -- curl http://<IP_pode>:8000/api/liveness/
-kubectl exec -it busybox -n todoapp -- curl http://<IP_pode>:8000/api/readiness/
+Save the `todoapp` pod IP to a variable:
+
+```bash
+POD_IP=$(kubectl get pod todoapp -n todoapp -o jsonpath='{.status.podIP}')
+echo $POD_IP
+```
+
+Run requests from the `busybox` pod:
+
+```bash
+kubectl exec busybox -n todoapp -- curl http://$POD_IP:8000/api/liveness/
+kubectl exec busybox -n todoapp -- curl http://$POD_IP:8000/api/readiness/
+```

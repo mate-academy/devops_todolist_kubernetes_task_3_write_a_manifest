@@ -4,7 +4,7 @@ Run these commands from the repository root. You need a running Kubernetes
 cluster, `kubectl` configured to access it, and the application image available
 in Docker Hub.
 
-The commands below use the repository's current directory name, `.infrasctructure`.
+The commands below use the repository's current directory name, `.infrastructure`.
 
 ## Apply all manifests
 

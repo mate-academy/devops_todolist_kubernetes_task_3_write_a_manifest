@@ -1,9 +1,37 @@
+from unittest.mock import patch
+
 from django.contrib.auth.models import User
+from django.db import OperationalError
+from django.test import RequestFactory, SimpleTestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from lists.models import TodoList
+
+
+class HealthCheckTests(SimpleTestCase):
+    def test_liveness_does_not_require_database_or_authentication(self):
+        response = self.client.get(reverse("api:liveness"))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"OK")
+
+    @patch("api.views.connection")
+    def test_readiness_checks_database(self, database):
+        response = self.client.get(reverse("api:readiness"))
+        self.assertEqual(response.status_code, 200)
+        database.cursor.return_value.__enter__.return_value.execute.assert_called_once_with(
+            "SELECT 1"
+        )
+
+    @patch("api.views.connection")
+    def test_readiness_returns_unavailable_when_database_fails(self, database):
+        from api.views import readiness
+
+        database.cursor.side_effect = OperationalError("unavailable")
+        response = readiness(RequestFactory().get(reverse("api:readiness")))
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.content, b"Not ready")
 
 
 class UserTests(APITestCase):

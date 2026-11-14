@@ -2,13 +2,13 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY src/requirements.txt /app
+COPY requirements.txt /app
 
 ENV PYTHONUNBUFFERED=1
 
 RUN pip install -r requirements.txt
 
-COPY src/. /app
+COPY . /app
 
 RUN python manage.py migrate
 
